@@ -1,15 +1,29 @@
+import * as actionTypes from './actions';
+
 const initialState = {
     persons: []
 };
 
 const reducer = (state = initialState, action) => {
-    if (action.type="ADD_PERSON") {
+    
+    switch (action.type) {
+        case actionTypes.ADD_PERSON:
+            const newPerson = {
+                id: Math.random(),
+                name: 'Jason',
+                age: Math.floor( Math.random() * 40 )
+            }
         return {
             ...state,
-            persons: state.persons.concat({id: new Date(), name: action.name})
+            persons: state.persons.concat(newPerson)
         }
+        case actionTypes.DELETE_PERSON:
+        return {
+            ...state,
+            persons: state.persons.filter(person => person.id !== action.personId)
+            }
     }
     return state;
-}
+};
 
 export default reducer;
